@@ -1,25 +1,25 @@
-//Exercise 1 -->
+//Exercise 1&2 -->
 document.addEventListener('DOMContentLoaded', () => {
-    // Selection of board element
-    const board = document.getElementById('board');
-  
-    // Get all div elements within the board and add the 'square' class
-    const squares = board.querySelectorAll('div');
-    squares.forEach(square => {
-      square.classList.add('square');
-    });
-  });
-
-//Exercise 2 -->
-document.addEventListener('DOMContentLoaded', () => {
+      // Selection of board element
   const board = document.getElementById('board');
+    // Get all div elements within the board and add the 'square' class
   const squares = board.querySelectorAll('div');
+  squares.forEach(square => {
+    square.classList.add('square');
+  });
+ 
+
+
+
+
   // game variables
   let currentTurn = 'X';
   let gameState = Array(9).fill(null); // Array to keep track of the game state
   //winner variables
   const statusDiv = document.getElementById('status');
   let gameActive  = true;
+  //new game button
+  const newGameButton = document.querySelector('.btn');
 
     //Exercise 4
     //First check all winning combinations
@@ -79,6 +79,23 @@ document.addEventListener('DOMContentLoaded', () => {
         square.classList.remove('hover');
     });
   });
+
+  // Function to reset the game
+  function resetGame() {
+  gameState = Array(9).fill(null);
+  gameActive = true;
+  currentTurn = 'X';
+  statusDiv.textContent = "Move your mouse over a square and click to play an X or an O.";
+  statusDiv.classList.remove('you-won');
+    
+  squares.forEach(square => {
+    square.textContent = ''; // Clear X or O from each square
+    square.classList.remove('X', 'O'); // Remove X or O class for styling
+  });
+  }
+
+  // new game button to reset the game 
+  newGameButton.addEventListener('click', resetGame);
 });
 
 
