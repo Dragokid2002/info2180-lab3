@@ -14,21 +14,55 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const board = document.getElementById('board');
   const squares = board.querySelectorAll('div');
-  
   // game variables
   let currentTurn = 'X';
   let gameState = Array(9).fill(null); // Array to keep track of the game state
+  //winner variables
+  const statusDiv = document.getElementById('status');
+  let gameActive  = true;
+
+    //Exercise 4
+    //First check all winning combinations
+    const winningCombinations = [
+      [0, 1, 2], // Top row
+      [3, 4, 5], // Middle row
+      [6, 7, 8], // Bottom row
+      [0, 3, 6], // Left column
+      [1, 4, 7], // Middle column
+      [2, 5, 8], // Right column
+      [0, 4, 8], // Top-left to bottom-right diagonal
+      [2, 4, 6]  // Top-right to bottom-left diagonal
+    ];
+    
+    function checkWinner() {
+      for (const combination of winningCombinations) {
+        const [a, b, c] = combination;
+        if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+          return gameState[a]; //X or O is winner
+        }
+      }
+      return null;
+    }
+
 
   // Add event listener to each square
   squares.forEach((square, index) => {
     square.addEventListener('click', () => {
       // to validate marking on empty squares
-      if (!gameState[index]) {
+      if (gameActive && !gameState[index]) {
         gameState[index] = currentTurn;
         square.textContent = currentTurn;
         square.classList.add(currentTurn);
+
+        const winner = checkWinner();
+        if (winner) {
+          gameActive = false;
+          statusDiv.textContent = `Congrats! ${winner} is the Winner!`;
+          statusDiv.classList.add('you-won');
+        } else {
         // Alternate the turn
         currentTurn = currentTurn === 'X' ? 'O' : 'X';
+        }
       }
     });
 
@@ -46,3 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+
+
