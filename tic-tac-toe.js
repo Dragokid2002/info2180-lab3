@@ -1,3 +1,4 @@
+//Exercise 1 -->
 document.addEventListener('DOMContentLoaded', () => {
     // Selection of board element
     const board = document.getElementById('board');
@@ -9,29 +10,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-
-  // tic-tac-toe.js
+//Exercise 2 -->
 document.addEventListener('DOMContentLoaded', () => {
   const board = document.getElementById('board');
   const squares = board.querySelectorAll('div');
   
-  // Initialize game variables
+  // game variables
   let currentTurn = 'X';
   let gameState = Array(9).fill(null); // Array to keep track of the game state
 
   // Add event listener to each square
   squares.forEach((square, index) => {
     square.addEventListener('click', () => {
-      // Only allow marking empty squares
+      // to validate marking on empty squares
       if (!gameState[index]) {
-        // Update the game state and display X or O
         gameState[index] = currentTurn;
         square.textContent = currentTurn;
         square.classList.add(currentTurn);
-
         // Alternate the turn
         currentTurn = currentTurn === 'X' ? 'O' : 'X';
       }
+    });
+
+    //Exercise 3
+    //Mouse enter event
+    square.addEventListener('mouseenter', () => {
+      if (!gameState[index]){
+        square.classList.add('hover');
+      }
+    });
+
+    //Mouse leave event
+    square.addEventListener('mouseleave', () => {
+        square.classList.remove('hover');
     });
   });
 });
